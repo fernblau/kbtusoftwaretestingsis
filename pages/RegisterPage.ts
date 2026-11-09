@@ -9,8 +9,8 @@ export interface RegisterData {
   postcode: string;
   city: string;
   state: string;
-  country: string; // код страны, например 'DE'
-  phone: string;   // только цифры
+  country: string;
+  phone: string;
   email: string;
   pass: string;
 }
@@ -25,7 +25,6 @@ export class RegisterPage extends BasePage {
     await t('first-name').fill(d.firstName);
     await t('last-name').fill(d.lastName);
     await t('dob').fill(d.dob);
-    // страна выбирается первой: от неё зависит проверка индекса
     await t('country').selectOption(d.country);
     await t('postal_code').fill(d.postcode);
     await t('house_number').fill(d.houseNumber);
@@ -36,5 +35,6 @@ export class RegisterPage extends BasePage {
     await t('email').fill(d.email);
     await t('password').fill(d.pass);
     await t('register-submit').click();
+    await this.page.waitForLoadState('networkidle').catch(() => {});
   }
 }

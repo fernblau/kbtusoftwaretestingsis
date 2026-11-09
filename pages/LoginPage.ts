@@ -10,6 +10,7 @@ export class LoginPage extends BasePage {
     await this.page.getByTestId('email').fill(email);
     await this.page.getByTestId('password').fill(pass);
     await this.page.getByTestId('login-submit').click();
+    await this.page.waitForLoadState('networkidle').catch(() => {});
   }
 
   getErrorMessage(): Locator {
